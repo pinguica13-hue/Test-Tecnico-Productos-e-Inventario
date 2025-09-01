@@ -1,26 +1,13 @@
-package com.example.msproductos.model;
+package com.example.msproductos;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
-
-@Entity
-@Table(name = "productos")
-@Data
-    public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
-    @Column(nullable = false)
-    private String nombre;
-
-
-    @Column(nullable = false)
-    private Double precio;
-
-
-    private String descripcion;
+@SpringBootApplication
+public class MSProductosApplication 
+{
+    public static void main(String[] args) 
+    {
+        SpringApplication.run(MSProductosApplication.class, args);
+    }
 }
