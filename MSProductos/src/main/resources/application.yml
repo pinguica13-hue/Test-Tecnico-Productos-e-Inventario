@@ -1,0 +1,17 @@
+server:
+port: 8080
+spring:
+datasource:
+  url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/msproductos}
+  username: ${SPRING_DATASOURCE_USERNAME:postgres}
+  password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+jpa:
+hibernate:
+  ddl-auto: update
+show-sql: false
+
+
+# Api key (usado para autenticación entre servicios). Déjalo vacío para no exigir api-key en llamadas externas.
+ms:
+  api:
+    key: ${MS_API_KEY:} 
