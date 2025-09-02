@@ -1,6 +1,6 @@
 package com.example.msinventario.controller;
 
-import com.example.msinventario.dto.CompraRequest;
+import com.example.msinventario.descuento.CompraRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
