@@ -1,7 +1,7 @@
 package com.example.msinventario.service;
 
-import com.example.msinventario.dto.CompraRequest;
-import com.example.msinventario.dto.CompraResponse;
+import com.example.msinventario.descuento.CompraRequest;
+import com.example.msinventario.descuento.CompraResponse;
 import com.example.msinventario.entity.Compra;
 import com.example.msinventario.entity.Inventario;
 import com.example.msinventario.repository.CompraRepository;
