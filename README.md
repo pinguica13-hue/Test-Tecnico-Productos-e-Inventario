@@ -14,16 +14,16 @@ Este proyecto implementa un sistema de gestión de productos e inventario utiliz
    
 2. Arquitectura
 ```mermaid
-    flowchart LR
-    A[Cliente / Frontend] -->|JSON API| B[MSProductos]
-    A -->|JSON API| C[MSInventario]
-    C -->|HTTP + API Key| B
-    B -->|DB Productos| D[(MySQL / H2)]
-    C -->|DB Inventario| E[(MySQL / H2)]
-
-    -Comunicación entre microservicios por HTTP/JSON.
-    -Autenticación básica con API Key.
-    -Manejo de timeout y reintentos en el cliente REST.
+flowchart LR
+A[Cliente / Frontend] -->|JSON API| B[MSProductos]
+A -->|JSON API| C[MSInventario]
+C -->|HTTP + API Key| B
+B -->|DB Productos| D[(MySQL / H2)]
+C -->|DB Inventario| E[(MySQL / H2)]
+```
+-Comunicación entre microservicios por HTTP/JSON.
+-Autenticación básica con API Key.
+-Manejo de timeout y reintentos en el cliente REST.
 
 3. Tecnologías
     -Java 17
