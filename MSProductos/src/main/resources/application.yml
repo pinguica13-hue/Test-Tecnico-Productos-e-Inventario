@@ -1,17 +1,33 @@
 server:
-port: 8080
+  port: 8080
+
 spring:
-datasource:
-  url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/msproductos}
-  username: ${SPRING_DATASOURCE_USERNAME:postgres}
-  password: ${SPRING_DATASOURCE_PASSWORD:postgres}
-jpa:
-hibernate:
-  ddl-auto: update
-show-sql: false
+  application:
+    name: msproductos
+  datasource:
+    url: jdbc:h2:mem:productosdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
+# Swagger / OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  packages-to-scan: com.example.msproductos.controller
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
 
-# Api key (usado para autenticación entre servicios). Déjalo vacío para no exigir api-key en llamadas externas.
-ms:
+# API Key para comunicación entre microservicios
+security:
   api:
-    key: ${MS_API_KEY:} 
+    key: producto-service-key-123
