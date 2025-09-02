@@ -1,4 +1,4 @@
-package com.example.msinventario.dto;
+package com.example.msinventario.descuento;
 
 import lombok.Builder;
 import lombok.Data;
