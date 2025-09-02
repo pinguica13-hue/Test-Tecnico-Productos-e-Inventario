@@ -1,119 +1,141 @@
-# 🛒 Microservicios de Productos e Inventario
+#Sistema de Microservicios - Productos e Inventario
 
-Este proyecto implementa un sistema de microservicios en **Spring Boot** para gestionar productos, inventario y compras.
+Este proyecto implementa un sistema de gestión de productos e inventario utilizando Spring Boot + JPA + MySQL/H2, siguiendo un enfoque de microservicios.
 
----
+1. Microservicios
 
-## 📌 Arquitectura General
+  1.MSProductos
+    Gestión de productos.
+    Endpoints para crear, consultar y listar productos.
+    Base de datos propia (productos_db).
+  
+   2.MSInventario
+    Gestión de inventario y compras.
+    Consulta y actualización del stock de productos.
+    Comunicación con MSProductos vía HTTP + API Key.
+    Base de datos propia (inventario_db).
 
-La solución se compone de dos microservicios principales:
+2. Arquitectura
+flowchart LR
+    A[Cliente / Frontend] -->|JSON API| B[MSProductos]
+    A -->|JSON API| C[MSInventario]
+    C -->|HTTP + API Key| B
+    B -->|DB Productos| D[(MySQL / H2)]
+    C -->|DB Inventario| E[(MySQL / H2)]
 
-- **MSProductos**  
-  Maneja la información de los productos (crear, listar, obtener por ID).
-- **MSInventario**  
-  Administra la disponibilidad de inventario, gestiona compras y valida productos a través de MSProductos.
+3.Comunicación entre microservicios por HTTP/JSON.
 
-📡 Comunicación entre servicios: **HTTP + JSON API**  
-🔑 Seguridad: **API Key** en cabecera de cada request  
-⚙️ Tolerancia a fallos: timeout + reintentos básicos en llamadas REST
+Autenticación básica con API Key.
 
----
+Manejo de timeout y reintentos en el cliente REST.
 
-## 📂 Estructura del Proyecto
-/msproductos
-├── src/main/java/com/example/msproductos
-│ ├── controller
-│ ├── model
-│ ├── repository
-│ └── service
-├── resources/application.yml
-└── pom.xml
+🚀 Tecnologías
 
-/msinventario
-├── src/main/java/com/example/msinventario
-│ ├── client
-│ ├── controller
-│ ├── dto
-│ ├── entity
-│ ├── repository
-│ └── service
-├── resources/application.yml
-└── pom.xml
+Java 17
 
-## 🚀 Ejecución del Proyecto
+Spring Boot 3.x
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/tuusuario/microservicios-compras.git
-   cd microservicios-compras
+Spring Data JPA
 
- 2.Compilar y empaquetar cada servicio:
-    cd msproductos
-    mvn clean package -DskipTests
-    cd ../msinventario
-    mvn clean package -DskipTests
+MySQL / H2 (test)
 
-3.Ejecutar los microservicios:
+Lombok
 
-    # MSProductos
-    java -jar target/msproductos-0.0.1-SNAPSHOT.jar
-    
-    # MSInventario
-    java -jar target/msinventario-0.0.1-SNAPSHOT.jar
+Swagger / OpenAPI
 
-    (Opcional) Levantar con Docker:
+JUnit 5 + Mockito
 
-4. Levandar con docker opcional
-   docker build -t msproductos ./msproductos
-    docker run -p 8080:8080 msproductos
-    
-    docker build -t msinventario ./msinventario
-    docker run -p 8081:8081 msinventario
+📖 Documentación API
 
-5. Seguridad entre Microservicios
-   Se implementa API Key en los headers HTTP para validar las llamadas entre servicios.
+Swagger habilitado en ambos servicios:
 
-    Ejemplo de header:  x-api-key: mi-clave-secreta
-    Las claves se configuran en application.yml.
+MSProductos → http://localhost:8080/swagger-ui.html
 
-6. Documentación API SProductos (http://localhost:8080/productos)
-   POST /productos → Crear un nuevo producto
-   Body ejemplo:
-   {
-      "nombre": "Laptop",
-      "precio": 3500.0
-    }
-    GET /productos/{id} → Obtener un producto por ID
-    GET /productos → Listar todos los productos
+MSInventario → http://localhost:8081/swagger-ui.html
 
+📌 Endpoints principales
+MSProductos
 
-   7. Documentación API MSInventario (http://localhost:8081)
-    
-    GET /inventario/{productoId}
-    Consulta la cantidad disponible de un producto.
+POST /productos → Crear producto.
 
-    PUT /inventario/{productoId}
-    Actualiza el stock de un producto.
-    Body ejemplo:
-    {
-      "cantidad": 15
-    }
-        
-    POST /compras
-    Realiza una compra, validando disponibilidad.
-    Body ejemplo:
-    {
-      "productoId": 1,
-      "cantidad": 2
-    }
-   
-    Response ejemplo:
-    {
-      "productoId": 1,
-      "cantidadComprada": 2,
-      "mensaje": "Compra realizada con éxito"
-    }
+GET /productos/{id} → Obtener producto por ID.
 
-7. Swagger/OpenAPI se habilita en ambos servicios:
-    MSProductos → http://localhost:8080/swagger-ui.html
-    MSInventario → http://localhost:8081/swagger-ui.html
+GET /productos → Listar todos los productos.
+
+MSInventario
+
+GET /inventario/{productoId} → Consultar stock de producto.
+
+PUT /inventario/{productoId} → Actualizar stock de producto.
+
+POST /compras → Realizar compra (verifica stock y descuenta inventario).
+
+🔑 Seguridad (API Key)
+
+La comunicación entre MSInventario → MSProductos utiliza autenticación con API Key.
+
+Agregar en el application.yml de ms-inventario:
+
+msproductos:
+  url: http://localhost:8080
+  apikey: my-secret-key
+
+🧪 Testing
+
+Se incluyen pruebas unitarias y de integración:
+
+MSProductos
+
+Creación de productos.
+
+Consulta de productos.
+
+MSInventario
+
+Gestión de inventario.
+
+Proceso de compra (incluye comunicación con MSProductos).
+
+Manejo de errores:
+
+Producto no encontrado.
+
+Inventario insuficiente.
+
+Ejemplo de ejecución:
+mvn clean test
+
+▶️ Ejecución
+1. Clonar repositorio
+git clone https://github.com/tuusuario/microservicios-productos-inventario.git
+cd microservicios-productos-inventario
+
+2. Levantar MSProductos
+cd ms-productos
+mvn spring-boot:run
+
+3. Levantar MSInventario
+cd ms-inventario
+mvn spring-boot:run
+
+🐳 Docker
+
+Cada servicio cuenta con su propio Dockerfile.
+Ejemplo de construcción y ejecución:
+
+docker build -t ms-productos ./ms-productos
+docker run -p 8080:8080 ms-productos
+
+docker build -t ms-inventario ./ms-inventario
+docker run -p 8081:8081 ms-inventario
+
+📦 Futuras mejoras
+
+Implementar mensajería (Kafka/RabbitMQ) para eventos de inventario.
+
+Centralizar configuración con Spring Cloud Config.
+
+Implementar Eureka / Service Discovery.
+
+✨ Autores: Equipo de Desarrollo
+📅 Versión: 1.0.0
