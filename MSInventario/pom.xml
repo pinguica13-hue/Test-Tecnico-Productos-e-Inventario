@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>msproductos</artifactId>
+    <artifactId>msinventario</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>MSProductos</name>
-    <description>Microservicio de gestión de productos</description>
+    <name>MSInventario</name>
+    <description>Microservicio de gestión de inventario y compras</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -41,6 +41,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Cliente HTTP (para llamar a MSProductos) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <!-- Lombok -->
