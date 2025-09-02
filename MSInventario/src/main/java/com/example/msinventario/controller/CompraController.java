@@ -1,7 +1,7 @@
 package com.example.msinventario.controller;
 
-import com.example.msinventario.dto.CompraRequest;
-import com.example.msinventario.dto.CompraResponse;
+import com.example.msinventario.descuento.CompraRequest;
+import com.example.msinventario.descuento.CompraResponse;
 import com.example.msinventario.service.CompraService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
