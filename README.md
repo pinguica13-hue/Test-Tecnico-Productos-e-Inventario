@@ -23,6 +23,7 @@ flowchart LR
     B -->|DB Productos| D[(MySQL / H2)]
     C -->|DB Inventario| E[(MySQL / H2)]
 
+
 3.Comunicación entre microservicios por HTTP/JSON.
 
 Autenticación básica con API Key.
